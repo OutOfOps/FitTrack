@@ -7,7 +7,7 @@ import {
   FormControl,
   FormGroup
 } from '@angular/forms';
-import { ReminderSchedulerService, ReminderSchedule, UiToolkitModule } from '@fittrack/ui';
+import { ReminderSchedulerService, ReminderSchedule, FitButtonComponent } from '@fittrack/ui';
 
 interface StatusMessage {
   type: 'success' | 'error';
@@ -23,7 +23,7 @@ type ReminderFormGroup = FormGroup<{
 @Component({
   selector: 'app-settings-reminders',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, UiToolkitModule],
+  imports: [CommonModule, ReactiveFormsModule, FitButtonComponent],
   templateUrl: './settings-reminders.component.html',
   styleUrls: ['./settings-reminders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

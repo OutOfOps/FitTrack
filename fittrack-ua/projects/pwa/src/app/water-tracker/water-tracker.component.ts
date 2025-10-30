@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-import { UiToolkitModule } from '@fittrack/ui';
+import { FitButtonComponent } from '@fittrack/ui';
 import { DataCoreService, WaterEntry } from '@fittrack/data-core';
 import { DataContextService } from '../core/services/data-context.service';
 import { AppStatusService } from '../core/services/app-status.service';
@@ -42,7 +42,7 @@ interface WaterEntryView {
     MatChipsModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    UiToolkitModule
+    FitButtonComponent
   ]
 })
 export class WaterTrackerComponent {

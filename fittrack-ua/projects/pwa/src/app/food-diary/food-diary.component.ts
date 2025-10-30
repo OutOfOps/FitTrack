@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { UiToolkitModule } from '@fittrack/ui';
+import { FitButtonComponent } from '@fittrack/ui';
 import { DataCoreService, FoodEntry } from '@fittrack/data-core';
 import { DataContextService } from '../core/services/data-context.service';
 import { AppStatusService } from '../core/services/app-status.service';
@@ -49,7 +49,7 @@ interface ImportResult {
     MatChipsModule,
     MatDividerModule,
     MatProgressBarModule,
-    UiToolkitModule
+    FitButtonComponent
   ]
 })
 export class FoodDiaryComponent {
