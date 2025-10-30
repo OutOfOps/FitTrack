@@ -1,0 +1,93 @@
+<section class="reminder-settings">
+  <header>
+    <h1>Налаштування нагадувань</h1>
+    <p>Керуйте персональними нагадуваннями та отримуйте сповіщення у зручний час.</p>
+  </header>
+
+  <p class="unsupported" *ngIf="!isSupported">
+    Нагадування не підтримуються у цьому середовищі. Спробуйте інший браузер або активуйте HTTPS.
+  </p>
+
+  <ng-container *ngIf="isSupported">
+    <section class="permission-card">
+      <h2>Доступ до сповіщень</h2>
+      <p>{{ permissionDescription() }}</p>
+      <fit-button type="button" (click)="requestPermission()" [disabled]="processing() || permission() === 'granted'">
+        Надати дозвіл
+      </fit-button>
+    </section>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <fieldset>
+        <legend>Нове нагадування</legend>
+        <div class="field">
+          <label for="reminder-label">Назва</label>
+          <input
+            id="reminder-label"
+            type="text"
+            formControlName="label"
+            placeholder="Наприклад, Ранкове тренування"
+            [class.field--invalid]="form.controls.label.invalid && form.controls.label.touched"
+          />
+          <div class="hint" *ngIf="form.controls.label.invalid && form.controls.label.touched">
+            Вкажіть назву нагадування (до 80 символів).
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="reminder-time">Час</label>
+          <input id="reminder-time" type="time" formControlName="time" />
+        </div>
+
+        <div class="field field--weekdays">
+          <span>Дні тижня</span>
+          <div class="weekday-list">
+            <label *ngFor="let option of weekdayOptions">
+              <input
+                type="checkbox"
+                [checked]="isWeekdaySelected(option.value)"
+                (change)="toggleWeekday(option.value, ($event.target as HTMLInputElement).checked)"
+              />
+              <span>{{ option.label }}</span>
+            </label>
+          </div>
+          <div class="hint" *ngIf="!form.controls.weekdays.value.length">
+            Виберіть хоча б один день тижня.
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button class="submit" type="submit" [disabled]="processing()">Зберегти нагадування</button>
+      </div>
+    </form>
+
+    <div class="status" *ngIf="statusMessage() as status" [class.status--error]="status.type === 'error'">
+      {{ status.text }}
+    </div>
+
+    <section class="schedule-list">
+      <h2>Збережені нагадування</h2>
+      <p *ngIf="!schedules().length" class="empty">Немає активних нагадувань. Додайте перше вище.</p>
+      <ul *ngIf="schedules().length">
+        <li *ngFor="let schedule of schedules(); trackBy: trackById">
+          <div class="schedule-main">
+            <label>
+              <input
+                type="checkbox"
+                [checked]="schedule.enabled"
+                (change)="toggle(schedule, ($event.target as HTMLInputElement).checked)"
+              />
+              <span class="title">{{ schedule.label }}</span>
+            </label>
+            <button type="button" class="remove" (click)="remove(schedule)">Видалити</button>
+          </div>
+          <div class="schedule-meta">
+            <span class="time">{{ schedule.time }}</span>
+            <span class="weekdays">{{ formatWeekdays(schedule) }}</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </ng-container>
+</section>

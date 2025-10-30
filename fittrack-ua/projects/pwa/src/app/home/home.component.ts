@@ -7,6 +7,7 @@ import { UiToolkitModule } from '@fittrack/ui';
 import { WaterTrackerComponent } from '../water-tracker/water-tracker.component';
 import { FoodDiaryComponent } from '../food-diary/food-diary.component';
 import { VitaminBalanceComponent } from '../vitamin-balance/vitamin-balance.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ import { VitaminBalanceComponent } from '../vitamin-balance/vitamin-balance.comp
     UiToolkitModule,
     WaterTrackerComponent,
     FoodDiaryComponent,
-    VitaminBalanceComponent
+    VitaminBalanceComponent,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
