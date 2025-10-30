@@ -1,15 +1,12 @@
-import { Crypto } from 'webcrypto-mock';
 import { CryptoService, EncryptedPayload } from './crypto.service';
 
 describe('CryptoService', () => {
   let service: CryptoService;
 
   beforeAll(() => {
-    Object.defineProperty(globalThis, 'crypto', {
-      value: new Crypto(),
-      configurable: true,
-      writable: false,
-    });
+    if (!globalThis.crypto || typeof globalThis.crypto.subtle === 'undefined') {
+      throw new Error('Web Crypto API is not available in this environment.');
+    }
   });
 
   beforeEach(() => {
