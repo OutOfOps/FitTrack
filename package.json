@@ -1,0 +1,11 @@
+{
+  "name": "fittrack-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix fittrack-ua start",
+    "build": "npm --prefix fittrack-ua run build",
+    "test": "npm --prefix fittrack-ua test",
+    "watch": "npm --prefix fittrack-ua run watch"
+  }
+}
