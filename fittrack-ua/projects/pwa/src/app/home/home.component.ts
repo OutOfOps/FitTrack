@@ -1,11 +1,25 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { PushNotificationService } from '../core/services/push-notification.service';
+import { UiToolkitModule } from '@fittrack/ui';
+import { WaterTrackerComponent } from '../water-tracker/water-tracker.component';
+import { FoodDiaryComponent } from '../food-diary/food-diary.component';
+import { VitaminBalanceComponent } from '../vitamin-balance/vitamin-balance.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    UiToolkitModule,
+    WaterTrackerComponent,
+    FoodDiaryComponent,
+    VitaminBalanceComponent
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

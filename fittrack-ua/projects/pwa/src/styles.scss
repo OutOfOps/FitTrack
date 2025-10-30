@@ -1,3 +1,21 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$fittrack-primary: mat.define-palette(mat.$indigo-palette);
+$fittrack-accent: mat.define-palette(mat.$light-blue-palette, A200, A100, A400);
+$fittrack-warn: mat.define-palette(mat.$red-palette);
+
+$fittrack-theme: mat.define-light-theme((
+  color: (
+    primary: $fittrack-primary,
+    accent: $fittrack-accent,
+    warn: $fittrack-warn
+  )
+));
+
+@include mat.all-component-themes($fittrack-theme);
+
 :root {
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   color: #1f2933;

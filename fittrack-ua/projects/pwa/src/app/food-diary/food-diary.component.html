@@ -1,0 +1,114 @@
+<mat-card class="food-diary">
+  <mat-card-header>
+    <mat-card-title>Харчовий щоденник</mat-card-title>
+    <mat-card-subtitle>
+      <mat-chip-set>
+        <mat-chip color="primary" [selected]="isOnline()" [disabled]="true">
+          <mat-icon aria-hidden="true">{{ isOnline() ? 'sync' : 'sync_disabled' }}</mat-icon>
+          {{ isOnline() ? 'Синхронізація активна' : 'Офлайн режим' }}
+        </mat-chip>
+        <mat-chip color="accent" [disabled]="true">
+          Калорії: {{ totalCalories() | number: '1.0-0' }} / {{ calorieTarget | number: '1.0-0' }}
+        </mat-chip>
+      </mat-chip-set>
+      <div class="backup-info" *ngIf="lastBackup() as backup; else noBackup">
+        <mat-icon aria-hidden="true">cloud_done</mat-icon>
+        Останній бекап: {{ backup | date: 'short' }}
+      </div>
+      <ng-template #noBackup>
+        <div class="backup-info backup-info--empty">
+          <mat-icon aria-hidden="true">cloud_off</mat-icon>
+          Бекапи ще не створені
+        </div>
+      </ng-template>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <section class="day-selector">
+      <button mat-icon-button type="button" (click)="changeDay(-1)" aria-label="Попередній день">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div class="day-selector__date">{{ selectedDay() | date: 'fullDate' }}</div>
+      <button mat-icon-button type="button" (click)="changeDay(1)" aria-label="Наступний день">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </section>
+
+    <mat-progress-bar
+      class="calorie-progress"
+      mode="determinate"
+      [value]="progressPercentage()"
+      aria-label="Прогрес по калоріях"
+    ></mat-progress-bar>
+
+    <section class="entry-form">
+      <form (ngSubmit)="addFoodEntry()" [formGroup]="entryForm">
+        <div class="entry-form__row">
+          <mat-form-field appearance="outline">
+            <mat-label>Страва</mat-label>
+            <input matInput type="text" formControlName="label" />
+            <mat-error *ngIf="entryForm.controls.label.hasError('required')">Назва обовʼязкова</mat-error>
+            <mat-error *ngIf="entryForm.controls.label.hasError('minlength')">Мінімум 2 символи</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Калорії</mat-label>
+            <input matInput type="number" min="0" step="10" formControlName="calories" />
+            <mat-error *ngIf="entryForm.controls.calories.hasError('required')">Вкажіть калорійність</mat-error>
+          </mat-form-field>
+        </div>
+        <fit-button (click)="addFoodEntry()">
+          <mat-icon aria-hidden="true">local_dining</mat-icon>
+          Додати прийом їжі
+        </fit-button>
+      </form>
+    </section>
+
+    <section class="import">
+      <label class="import__label" for="food-diary-import">
+        <input
+          id="food-diary-import"
+          type="file"
+          accept="application/json"
+          (change)="handleImport($event)"
+          hidden
+        />
+        <fit-button>
+          <mat-icon aria-hidden="true">file_upload</mat-icon>
+          Імпорт JSON
+        </fit-button>
+      </label>
+      <div class="import__result" *ngIf="importState() as result">
+        <span class="import__success" *ngIf="result.imported > 0">Імпортовано {{ result.imported }} записів.</span>
+        <span class="import__errors" *ngIf="result.failed > 0">
+          Помилки: {{ result.failed }}.
+          <span *ngIf="result.errors.length > 0">{{ result.errors.join(', ') }}</span>
+        </span>
+      </div>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="entry-list" aria-live="polite">
+      <div class="loading" *ngIf="isLoading(); else loaded">
+        <mat-icon aria-hidden="true">hourglass_empty</mat-icon>
+        <span>Оновлення списку…</span>
+      </div>
+      <ng-template #loaded>
+        <p class="error" *ngIf="errorMessage() as error">{{ error }}</p>
+        <ul *ngIf="entries().length > 0; else empty">
+          <li *ngFor="let entry of entries()" class="entry">
+            <div class="entry__headline">
+              <span class="entry__title">{{ entry.label }}</span>
+              <span class="entry__calories">{{ entry.calories | number: '1.0-0' }} ккал</span>
+            </div>
+            <div class="entry__meta">{{ entry.recordedAt | date: 'shortTime' }}</div>
+          </li>
+        </ul>
+        <ng-template #empty>
+          <p class="empty">Немає записів за цей день. Імпортуйте дані або додайте перший запис.</p>
+        </ng-template>
+      </ng-template>
+    </section>
+  </mat-card-content>
+</mat-card>
