@@ -1,7 +1,6 @@
 import 'fake-indexeddb/auto';
 
 import Dexie, { Table } from 'dexie';
-import { Crypto } from 'webcrypto-mock';
 
 import { CryptoService } from '@fittrack/crypto';
 
@@ -21,10 +20,9 @@ describe('DataCoreService', () => {
   let keyring: EncryptionKeyring;
 
   beforeAll(() => {
-    Object.defineProperty(globalThis, 'crypto', {
-      value: new Crypto(),
-      configurable: true,
-    });
+    if (!globalThis.crypto || typeof globalThis.crypto.subtle === 'undefined') {
+      throw new Error('Web Crypto API is not available in this environment.');
+    }
   });
 
   beforeEach(async () => {
