@@ -84,6 +84,23 @@
   </mat-card>
 </section>
 
+<section class="catalog">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Каталог харчування</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Керуйте власним переліком українських страв, продуктів та овочів з калорійністю і вмістом вітамінів.
+      </p>
+      <a routerLink="/settings/food-catalog" class="catalog__link">
+        <mat-icon aria-hidden="true">restaurant</mat-icon>
+        Редагувати каталог
+      </a>
+    </mat-card-content>
+  </mat-card>
+</section>
+
 <section class="dashboards" #dashboardsSection>
   <app-water-tracker></app-water-tracker>
   <app-food-diary></app-food-diary>

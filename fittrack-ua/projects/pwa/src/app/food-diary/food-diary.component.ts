@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal, computed } from '@angular/core';
 import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,10 +10,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { FitButtonComponent } from '@fittrack/ui';
 import { DataCoreService, FoodEntry } from '@fittrack/data-core';
 import { DataContextService } from '../core/services/data-context.service';
 import { AppStatusService } from '../core/services/app-status.service';
+import { FoodCatalogService } from '../core/services/food-catalog.service';
 
 interface FoodEntryView {
   id: string;
@@ -21,6 +23,8 @@ interface FoodEntryView {
   calories: number;
   recordedAt: Date;
   createdAt: Date;
+  catalogItemId?: string;
+  vitamins: Array<{ code: string; amount: number }>;
 }
 
 interface ImportResult {
@@ -49,6 +53,7 @@ interface ImportResult {
     MatChipsModule,
     MatDividerModule,
     MatProgressBarModule,
+    MatSelectModule,
     FitButtonComponent
   ]
 })
@@ -57,6 +62,7 @@ export class FoodDiaryComponent {
   private readonly dataContext = inject(DataContextService);
   private readonly status = inject(AppStatusService);
   private readonly fb = inject(FormBuilder);
+  private readonly catalog = inject(FoodCatalogService);
 
   readonly selectedDay = signal(this.toDayString(new Date()));
   readonly isOnline = this.status.isOnline;
@@ -66,6 +72,7 @@ export class FoodDiaryComponent {
   readonly isLoading = signal(true);
   readonly errorMessage = signal<string | null>(null);
   readonly importState = signal<ImportResult | null>(null);
+  readonly selectedVitamins = signal<Array<{ code: string; amount: number }>>([]);
   readonly totalCalories = computed(() =>
     this.entries().reduce((total, entry) => total + entry.calories, 0)
   );
@@ -73,10 +80,16 @@ export class FoodDiaryComponent {
   readonly progressPercentage = computed(() =>
     Math.min(100, Math.round((this.totalCalories() / this.calorieTarget) * 100))
   );
+  readonly catalogItems = this.catalog.items;
 
-  readonly entryForm = this.fb.nonNullable.group({
-    label: ['', [Validators.required, Validators.minLength(2)]],
-    calories: [350, [Validators.required, Validators.min(0)]],
+  readonly entryForm: FormGroup<{
+    catalogItemId: FormControl<string | null>;
+    label: FormControl<string>;
+    calories: FormControl<number>;
+  }> = this.fb.group({
+    catalogItemId: this.fb.control<string | null>(null),
+    label: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2)]),
+    calories: this.fb.nonNullable.control(350, [Validators.required, Validators.min(0)])
   });
 
   private readonly refreshToken = signal(0);
@@ -87,12 +100,44 @@ export class FoodDiaryComponent {
       const token = this.refreshToken();
       void this.loadEntries(day, token);
     });
+
+    effect(() => {
+      const id = this.entryForm.controls.catalogItemId.value;
+      const items = this.catalogItems();
+      if (!id) {
+        this.selectedVitamins.set([]);
+        return;
+      }
+
+      const item = items.find((entry) => entry.id === id);
+      if (!item) {
+        this.selectedVitamins.set([]);
+        return;
+      }
+
+      this.selectedVitamins.set(this.mapVitamins(item.vitamins));
+    });
   }
 
   changeDay(offset: number): void {
     const current = new Date(this.selectedDay());
     current.setDate(current.getDate() + offset);
     this.selectedDay.set(this.toDayString(current));
+  }
+
+  applyCatalogItem(id: string | null): void {
+    if (!id) {
+      return;
+    }
+
+    const items = this.catalogItems();
+    const item = items.find((entry) => entry.id === id);
+    if (!item) {
+      return;
+    }
+
+    this.entryForm.controls.label.setValue(item.name);
+    this.entryForm.controls.calories.setValue(item.calories);
   }
 
   async addFoodEntry(): Promise<void> {
@@ -102,11 +147,17 @@ export class FoodDiaryComponent {
     }
 
     const context = await this.dataContext.ensureContext();
-    const { label, calories } = this.entryForm.getRawValue();
+    const { label, calories, catalogItemId } = this.entryForm.getRawValue();
+    const vitamins = this.selectedVitamins().reduce<Record<string, number>>((acc, vitamin) => {
+      acc[vitamin.code] = vitamin.amount;
+      return acc;
+    }, {});
     const entry: FoodEntry = {
       label,
       calories,
-      recordedAt: Date.now()
+      recordedAt: Date.now(),
+      catalogItemId: catalogItemId ?? undefined,
+      vitamins: Object.keys(vitamins).length > 0 ? vitamins : undefined
     };
 
     await this.dataCore.saveFood(this.selectedDay(), entry, {
@@ -114,7 +165,8 @@ export class FoodDiaryComponent {
       keyVersion: context.keyVersion
     });
 
-    this.entryForm.reset({ label: '', calories: 350 });
+    this.entryForm.reset({ catalogItemId: null, label: '', calories: 350 });
+    this.selectedVitamins.set([]);
     this.refresh();
   }
 
@@ -211,6 +263,8 @@ export class FoodDiaryComponent {
       const calories = record['calories'];
       const recordedAt = record['recordedAt'] ?? record['timestamp'];
       const day = record['day'];
+      const vitamins = record['vitamins'];
+      const catalogItemId = record['catalogItemId'];
 
       if (typeof label !== 'string' || label.trim().length < 2) {
         errors.push(`Запис #${index + 1}: поле label відсутнє або закоротке`);
@@ -244,7 +298,13 @@ export class FoodDiaryComponent {
         entry: {
           label: label.trim(),
           calories,
-          recordedAt: timestamp
+          recordedAt: timestamp,
+          catalogItemId:
+            typeof catalogItemId === 'string' && catalogItemId.length > 0 ? catalogItemId : undefined,
+          vitamins:
+            typeof vitamins === 'object' && vitamins !== null
+              ? this.normalizeVitamins(vitamins as Record<string, unknown>)
+              : undefined
         }
       });
     });
@@ -268,7 +328,9 @@ export class FoodDiaryComponent {
             label: data.label,
             calories: data.calories,
             recordedAt: new Date(data.recordedAt),
-            createdAt: new Date(entry.createdAt)
+            createdAt: new Date(entry.createdAt),
+            catalogItemId: data.catalogItemId,
+            vitamins: this.mapVitamins(data.vitamins)
           } satisfies FoodEntryView;
         })
         .sort((a, b) => a.recordedAt.getTime() - b.recordedAt.getTime());
@@ -288,5 +350,35 @@ export class FoodDiaryComponent {
 
   private toDayString(value: Date): string {
     return value.toISOString().slice(0, 10);
+  }
+
+  private mapVitamins(vitamins: Record<string, number> | undefined): Array<{ code: string; amount: number }> {
+    if (!vitamins) {
+      return [];
+    }
+
+    return Object.entries(vitamins)
+      .map(([code, amount]) => ({ code, amount }))
+      .sort((a, b) => a.code.localeCompare(b.code));
+  }
+
+  private normalizeVitamins(source: Record<string, unknown>): Record<string, number> {
+    const normalized: Record<string, number> = {};
+
+    for (const [key, value] of Object.entries(source)) {
+      const code = key.trim();
+      if (!code) {
+        continue;
+      }
+
+      const amount = typeof value === 'number' ? value : Number(value);
+      if (Number.isNaN(amount)) {
+        continue;
+      }
+
+      normalized[code] = amount;
+    }
+
+    return normalized;
   }
 }

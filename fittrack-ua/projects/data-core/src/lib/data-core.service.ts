@@ -15,6 +15,8 @@ export interface FoodEntry {
   label: string;
   calories: number;
   recordedAt: number;
+  catalogItemId?: string;
+  vitamins?: Record<string, number>;
 }
 
 export interface PersistedEntry {

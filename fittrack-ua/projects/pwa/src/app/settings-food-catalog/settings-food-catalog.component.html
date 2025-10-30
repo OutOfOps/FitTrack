@@ -1,0 +1,107 @@
+<mat-card class="catalog">
+  <mat-card-header>
+    <mat-card-title>Каталог страв та продуктів</mat-card-title>
+    <mat-card-subtitle>
+      Додавайте власні позиції з калорійністю та вмістом вітамінів. Базовий перелік містить популярні продукти України.
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <section class="catalog__form" aria-label="Додати продукт">
+      <form (ngSubmit)="submit()" [formGroup]="form">
+        <div class="catalog__row">
+          <mat-form-field appearance="outline">
+            <mat-label>Назва</mat-label>
+            <input matInput formControlName="name" required />
+            <mat-error *ngIf="form.controls.name.hasError('required')">Вкажіть назву</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Категорія</mat-label>
+            <mat-select formControlName="category">
+              <mat-option *ngFor="let option of categories" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Калорії (на 100 г)</mat-label>
+            <input matInput type="number" min="0" formControlName="calories" required />
+          </mat-form-field>
+        </div>
+
+        <div class="catalog__vitamins">
+          <h3>Вітаміни</h3>
+          <p>Додайте перелік вітамінів та їх кількість (мг або мкг на 100 г).</p>
+
+          <div class="catalog__vitamin-list" *ngIf="vitamins.length > 0; else emptyVitamins">
+            <div class="catalog__vitamin" *ngFor="let group of vitamins.controls; index as index">
+              <mat-form-field appearance="outline">
+                <mat-label>Код вітаміну</mat-label>
+                <input matInput [formControl]="group.controls.code" placeholder="Наприклад, C" />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Кількість</mat-label>
+                <input matInput type="number" min="0" step="0.01" [formControl]="group.controls.amount" />
+              </mat-form-field>
+              <button type="button" mat-icon-button (click)="removeVitaminField(index)" aria-label="Видалити вітамін">
+                <mat-icon aria-hidden="true">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <ng-template #emptyVitamins>
+            <p class="catalog__vitamins-empty">Поки що немає вітамінів. Додайте перший запис.</p>
+          </ng-template>
+
+          <button type="button" mat-stroked-button color="primary" (click)="addVitaminField()">
+            <mat-icon aria-hidden="true">add</mat-icon>
+            Додати вітамін
+          </button>
+        </div>
+
+        <fit-button type="submit">
+          <mat-icon aria-hidden="true">library_add</mat-icon>
+          Додати до каталогу
+        </fit-button>
+      </form>
+
+      <div class="catalog__status" *ngIf="statusMessage() as message">
+        {{ message }}
+      </div>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="catalog__list" aria-live="polite">
+      <h3>Поточний перелік</h3>
+      <ng-container *ngIf="items().length > 0; else emptyCatalog">
+        <mat-list>
+          <mat-list-item *ngFor="let item of items(); trackBy: trackById">
+            <div matListItemTitle>{{ item.name }}</div>
+            <div matListItemLine>
+              {{ item.calories | number: '1.0-0' }} ккал • {{ categoryLabelMap.get(item.category) }}
+            </div>
+            <div matListItemLine *ngIf="item.vitamins | keyvalue as vitamins">
+              <span class="catalog__vitamin-chip" *ngFor="let vitamin of vitamins">
+                {{ vitamin.key }}: {{ vitamin.value | number: '1.0-2' }}
+              </span>
+            </div>
+            <button
+              type="button"
+              mat-icon-button
+              (click)="remove(item)"
+              aria-label="Видалити {{ item.name }}"
+            >
+              <mat-icon aria-hidden="true">delete_outline</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </ng-container>
+      <ng-template #emptyCatalog>
+        <p class="catalog__empty">Каталог порожній. Додайте першу страву або продукт.</p>
+      </ng-template>
+    </section>
+  </mat-card-content>
+</mat-card>

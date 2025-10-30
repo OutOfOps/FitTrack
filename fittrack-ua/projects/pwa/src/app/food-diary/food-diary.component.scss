@@ -51,6 +51,22 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
   }
+
+  &__vitamins {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: rgba(76, 175, 80, 0.08);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+
+    h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2e7d32;
+    }
+  }
 }
 
 .import {
@@ -122,6 +138,14 @@
   .entry__meta {
     font-size: 0.85rem;
     color: rgba(0, 0, 0, 0.56);
+  }
+
+  .entry__vitamins {
+    margin-top: 0.5rem;
+
+    .mat-mdc-chip-set {
+      gap: 0.35rem;
+    }
   }
 
   .empty {
