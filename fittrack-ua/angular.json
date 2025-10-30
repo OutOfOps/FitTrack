@@ -15,34 +15,86 @@
             "outputPath": "dist/pwa",
             "index": "projects/pwa/src/index.html",
             "main": "projects/pwa/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/pwa/tsconfig.app.json",
             "assets": [
-              "projects/pwa/src/favicon.ico",
-              "projects/pwa/src/assets"
+              "projects/pwa/src/favicon.png",
+              "projects/pwa/src/assets",
+              "projects/pwa/src/manifest.webmanifest"
             ],
-            "styles": ["projects/pwa/src/styles.css"],
-            "scripts": []
+            "styles": [
+              "projects/pwa/src/styles.scss"
+            ],
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "projects/pwa/ngsw-config.json"
           },
           "configurations": {
             "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/pwa/src/environments/environment.ts",
+                  "with": "projects/pwa/src/environments/environment.prod.ts"
+                }
+              ],
+              "serviceWorker": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "serviceWorker": false
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "pwa:build",
-            "port": 4200,
-            "host": "0.0.0.0"
-          },
           "configurations": {
             "production": {
               "buildTarget": "pwa:build:production"
+            },
+            "development": {
+              "buildTarget": "pwa:build:development",
+              "host": "0.0.0.0",
+              "port": 4200
             }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "pwa:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/pwa/tsconfig.spec.json",
+            "karmaConfig": "projects/pwa/karma.conf.js"
           }
         }
       }
