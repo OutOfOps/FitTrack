@@ -1,7 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import Dexie, { Table } from 'dexie';
 
-interface SyncManager {
+interface BackgroundSyncManager {
   register(tag: string): Promise<void>;
   getTags?(): Promise<string[]>;
 }
@@ -168,20 +168,31 @@ export class ReminderSchedulerService {
 
     try {
       const registration = await serviceWorker.ready;
-      if (!this.hasBackgroundSync(registration)) {
+      const syncManager = this.getBackgroundSyncManager(registration);
+      if (!syncManager) {
         return;
       }
 
-      await registration.sync.register('fittrack-reminders');
+      await syncManager.register('fittrack-reminders');
     } catch (error) {
       console.warn('Не вдалося зареєструвати синхронізацію нагадувань', error);
     }
   }
 
-  private hasBackgroundSync(
+  private getBackgroundSyncManager(
     registration: ServiceWorkerRegistration
-  ): registration is ServiceWorkerRegistration & { sync: SyncManager } {
-    const candidate = (registration as ServiceWorkerRegistration & { sync?: SyncManager }).sync;
-    return typeof candidate?.register === 'function';
+  ): BackgroundSyncManager | null {
+    const candidate = (registration as ServiceWorkerRegistration & { sync?: unknown }).sync;
+
+    if (typeof candidate !== 'object' || candidate === null) {
+      return null;
+    }
+
+    const register = (candidate as { register?: unknown }).register;
+    if (typeof register !== 'function') {
+      return null;
+    }
+
+    return candidate as BackgroundSyncManager;
   }
 }
