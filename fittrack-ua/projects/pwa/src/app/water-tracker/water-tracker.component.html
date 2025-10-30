@@ -1,0 +1,92 @@
+<mat-card class="water-tracker">
+  <mat-card-header>
+    <mat-card-title>Водний трекер</mat-card-title>
+    <mat-card-subtitle>
+      <mat-chip-set>
+        <mat-chip color="primary" [selected]="isOnline()" [disabled]="true">
+          <mat-icon class="status-icon" aria-hidden="true">
+            {{ isOnline() ? 'wifi' : 'wifi_off' }}
+          </mat-icon>
+          {{ isOnline() ? 'Онлайн' : 'Офлайн' }}
+        </mat-chip>
+        <mat-chip color="accent" [disabled]="true">
+          Загалом за день: {{ totalVolume() }} мл
+        </mat-chip>
+      </mat-chip-set>
+      <div class="backup-info" *ngIf="lastBackup() as backup; else noBackup">
+        <mat-icon aria-hidden="true">cloud_done</mat-icon>
+        Останній бекап: {{ backup | date: 'short' }}
+      </div>
+      <ng-template #noBackup>
+        <div class="backup-info backup-info--empty">
+          <mat-icon aria-hidden="true">cloud_off</mat-icon>
+          Бекапів ще не було
+        </div>
+      </ng-template>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <section class="day-selector">
+      <button mat-icon-button type="button" (click)="changeDay(-1)" aria-label="Попередній день">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div class="day-selector__date">{{ selectedDay() | date: 'fullDate' }}</div>
+      <button mat-icon-button type="button" (click)="changeDay(1)" aria-label="Наступний день">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </section>
+
+    <section class="entry-form">
+      <form (ngSubmit)="addWaterEntry()" [formGroup]="entryForm">
+        <div class="entry-form__row">
+          <mat-form-field appearance="outline">
+            <mat-label>Обʼєм (мл)</mat-label>
+            <input matInput type="number" min="50" max="5000" step="50" formControlName="volumeMl" />
+            <mat-error *ngIf="entryForm.controls.volumeMl.hasError('required')">
+              Вкажіть обʼєм води
+            </mat-error>
+            <mat-error *ngIf="entryForm.controls.volumeMl.hasError('min')">
+              Мінімум 50 мл за раз
+            </mat-error>
+            <mat-error *ngIf="entryForm.controls.volumeMl.hasError('max')">
+              Максимум 5000 мл за раз
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Нотатка</mat-label>
+            <input matInput type="text" formControlName="note" maxlength="120" />
+          </mat-form-field>
+        </div>
+        <fit-button (click)="addWaterEntry()">
+          <mat-icon aria-hidden="true">water_drop</mat-icon>
+          Додати
+        </fit-button>
+      </form>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="entry-list" aria-live="polite">
+      <div class="loading" *ngIf="isLoading(); else loaded">
+        <mat-progress-spinner diameter="32" mode="indeterminate"></mat-progress-spinner>
+        <span>Завантаження записів…</span>
+      </div>
+      <ng-template #loaded>
+        <p class="error" *ngIf="errorMessage() as error">{{ error }}</p>
+        <ul *ngIf="waterEntries().length > 0; else empty">
+          <li *ngFor="let entry of waterEntries()" class="entry">
+            <div class="entry__volume">{{ entry.volumeMl }} мл</div>
+            <div class="entry__meta">
+              <span>{{ entry.recordedAt | date: 'shortTime' }}</span>
+              <span *ngIf="entry.note">• {{ entry.note }}</span>
+            </div>
+          </li>
+        </ul>
+        <ng-template #empty>
+          <p class="empty">Записів поки немає. Додайте перший стакан води!</p>
+        </ng-template>
+      </ng-template>
+    </section>
+  </mat-card-content>
+</mat-card>

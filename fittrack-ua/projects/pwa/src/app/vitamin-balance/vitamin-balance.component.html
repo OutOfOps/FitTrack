@@ -1,0 +1,88 @@
+<mat-card class="vitamin-balance">
+  <mat-card-header>
+    <mat-card-title>Баланс вітамінів</mat-card-title>
+    <mat-card-subtitle>
+      <mat-chip-set>
+        <mat-chip color="primary" [selected]="isOnline()" [disabled]="true">
+          <mat-icon aria-hidden="true">{{ isOnline() ? 'health_and_safety' : 'cloud_off' }}</mat-icon>
+          {{ isOnline() ? 'Синхронізація' : 'Офлайн режим' }}
+        </mat-chip>
+        <mat-chip color="accent" [disabled]="true">
+          {{ issues().length === 0 ? 'Всі показники в нормі' : 'Потрібна увага: ' + issues().length }}
+        </mat-chip>
+      </mat-chip-set>
+      <div class="backup-info" *ngIf="lastBackup() as backup; else noBackup">
+        <mat-icon aria-hidden="true">cloud_done</mat-icon>
+        Останній бекап: {{ backup | date: 'short' }}
+      </div>
+      <ng-template #noBackup>
+        <div class="backup-info backup-info--empty">
+          <mat-icon aria-hidden="true">cloud_off</mat-icon>
+          Дані ще не синхронізовані
+        </div>
+      </ng-template>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <section class="chart">
+      <div echarts [options]="chartOptions()" class="chart__canvas" aria-label="Графік балансу вітамінів"></div>
+    </section>
+
+    <section class="form">
+      <form [formGroup]="vitaminForm">
+        <div class="form__grid">
+          <ng-container *ngFor="let item of vitaminRanges">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ item.label }} ({{ item.unit }})</mat-label>
+              <input matInput type="number" [formControlName]="item.id" step="0.1" />
+              <mat-error *ngIf="vitaminForm.get(item.id)?.hasError('vitaminMin')">
+                Мінімум: {{ item.min }} {{ item.unit }}
+              </mat-error>
+              <mat-error *ngIf="vitaminForm.get(item.id)?.hasError('vitaminMax')">
+                Максимум: {{ item.max }} {{ item.unit }}
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </form>
+      <div class="form__actions">
+        <fit-button type="button" (click)="resetToRecommended()">
+          <mat-icon aria-hidden="true">restart_alt</mat-icon>
+          Рекомендовані значення
+        </fit-button>
+      </div>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="validator">
+      <mat-form-field appearance="fill" class="validator__input">
+        <mat-label>JSON з показниками вітамінів</mat-label>
+        <textarea matInput rows="6" [formControl]="jsonInput" placeholder="{ &quot;vitaminC&quot;: 95, ... }"></textarea>
+      </mat-form-field>
+      <div class="validator__actions">
+        <fit-button type="button" (click)="applyJson()">
+          <mat-icon aria-hidden="true">check_circle</mat-icon>
+          Перевірити дані
+        </fit-button>
+      </div>
+      <ul class="validator__errors" *ngIf="validationErrors().length > 0">
+        <li *ngFor="let error of validationErrors()">{{ error }}</li>
+      </ul>
+    </section>
+
+    <section class="status" aria-live="polite">
+      <h3>Статус показників</h3>
+      <ul>
+        <li *ngFor="let item of vitaminStatuses()" [class.status--ok]="item.status === 'optimal'" [class.status--warn]="item.status !== 'optimal'">
+          <span class="status__label">{{ item.range.label }}</span>
+          <span class="status__value">{{ item.value }} {{ item.range.unit }}</span>
+          <span class="status__badge" *ngIf="item.status === 'deficit'">Дефіцит</span>
+          <span class="status__badge status__badge--warn" *ngIf="item.status === 'excess'">Надлишок</span>
+          <span class="status__badge status__badge--ok" *ngIf="item.status === 'optimal'">Оптимально</span>
+        </li>
+      </ul>
+    </section>
+  </mat-card-content>
+</mat-card>
