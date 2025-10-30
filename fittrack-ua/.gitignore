@@ -10,6 +10,14 @@
 
 # dependencies
 /node_modules
+!/node_modules/
+node_modules/*
+!node_modules/dexie/
+!node_modules/dexie/**
+!node_modules/fake-indexeddb/
+!node_modules/fake-indexeddb/**
+!node_modules/webcrypto-mock/
+!node_modules/webcrypto-mock/**
 
 # IDEs and editors
 /.idea

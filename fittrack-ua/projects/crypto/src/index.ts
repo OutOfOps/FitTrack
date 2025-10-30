@@ -1,1 +1,1 @@
-export * from './lib/crypto-toolkit.service';
+export * from './lib/crypto.service';
