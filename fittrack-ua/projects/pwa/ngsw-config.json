@@ -25,5 +25,25 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "backup-api",
+      "urls": [
+        "/api/backup",
+        "/api/restore",
+        "/api/sync"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "10s"
+      },
+      "backgroundSync": {
+        "queueName": "fittrack-sync-queue",
+        "maxAge": "24h"
+      }
+    }
   ]
 }

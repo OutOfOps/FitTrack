@@ -10,6 +10,13 @@
       [attr.aria-current]="homeActive.isActive ? 'page' : null"
       >Головна</a
     >
+    <a
+      routerLink="/settings/reminders"
+      routerLinkActive="active"
+      #remindersActive="routerLinkActive"
+      [attr.aria-current]="remindersActive.isActive ? 'page' : null"
+      >Нагадування</a
+    >
   </nav>
 </header>
 <main class="app-content">
