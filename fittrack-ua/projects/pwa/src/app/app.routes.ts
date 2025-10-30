@@ -13,6 +13,13 @@ export const appRoutes: Routes = [
       )
   },
   {
+    path: 'settings/food-catalog',
+    loadComponent: () =>
+      import('./settings-food-catalog/settings-food-catalog.component').then(
+        (m) => m.SettingsFoodCatalogComponent
+      )
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'

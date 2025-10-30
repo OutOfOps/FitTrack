@@ -50,6 +50,15 @@
       <form (ngSubmit)="addFoodEntry()" [formGroup]="entryForm">
         <div class="entry-form__row">
           <mat-form-field appearance="outline">
+            <mat-label>Обрати з каталогу</mat-label>
+            <mat-select formControlName="catalogItemId" (selectionChange)="applyCatalogItem($event.value)">
+              <mat-option [value]="null">Власна страва</mat-option>
+              <mat-option *ngFor="let item of catalogItems()" [value]="item.id">
+                {{ item.name }} — {{ item.calories | number: '1.0-0' }} ккал
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Страва</mat-label>
             <input matInput type="text" formControlName="label" />
             <mat-error *ngIf="entryForm.controls.label.hasError('required')">Назва обовʼязкова</mat-error>
@@ -66,6 +75,14 @@
           Додати прийом їжі
         </fit-button>
       </form>
+      <div class="entry-form__vitamins" *ngIf="selectedVitamins().length > 0">
+        <h4>Вітамінний профіль</h4>
+        <mat-chip-set>
+          <mat-chip *ngFor="let vitamin of selectedVitamins()">
+            {{ vitamin.code }}: {{ vitamin.amount | number: '1.0-2' }}
+          </mat-chip>
+        </mat-chip-set>
+      </div>
     </section>
 
     <section class="import">
@@ -107,6 +124,13 @@
               <span class="entry__calories">{{ entry.calories | number: '1.0-0' }} ккал</span>
             </div>
             <div class="entry__meta">{{ entry.recordedAt | date: 'shortTime' }}</div>
+            <div class="entry__vitamins" *ngIf="entry.vitamins.length > 0">
+              <mat-chip-set>
+                <mat-chip *ngFor="let vitamin of entry.vitamins">
+                  {{ vitamin.code }}: {{ vitamin.amount | number: '1.0-2' }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
           </li>
         </ul>
         <ng-template #empty>

@@ -156,6 +156,42 @@
   }
 }
 
+.catalog {
+  margin-top: 2rem;
+  max-width: 36rem;
+  margin-inline: auto;
+
+  mat-card {
+    padding: 1.5rem 1.25rem;
+    background: rgba(76, 175, 80, 0.08);
+  }
+
+  p {
+    margin-bottom: 1.25rem;
+    color: #1f2937;
+  }
+
+  .catalog__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid rgba(56, 142, 60, 0.3);
+    color: #1b5e20;
+    text-decoration: none;
+    transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+
+    mat-icon {
+      font-size: 1.25rem;
+    }
+
+    &:hover {
+      background-color: rgba(56, 142, 60, 0.12);
+    }
+  }
+}
+
 .dashboards {
   margin-top: 3rem;
   display: grid;
