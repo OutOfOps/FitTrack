@@ -61,7 +61,7 @@
             <mat-error *ngIf="entryForm.controls.calories.hasError('required')">Вкажіть калорійність</mat-error>
           </mat-form-field>
         </div>
-        <fit-button (click)="addFoodEntry()">
+        <fit-button type="submit">
           <mat-icon aria-hidden="true">local_dining</mat-icon>
           Додати прийом їжі
         </fit-button>

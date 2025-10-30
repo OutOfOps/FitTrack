@@ -6,7 +6,7 @@
         Відстежуйте свої тренування, харчування та відновлення у сучасному прогресивному веб-застосунку,
         що працює навіть без інтернету.
       </p>
-      <fit-button>
+      <fit-button type="button" (click)="scrollToDashboards()">
         <mat-icon aria-hidden="true">bolt</mat-icon>
         Розпочати
       </fit-button>
@@ -84,7 +84,7 @@
   </mat-card>
 </section>
 
-<section class="dashboards">
+<section class="dashboards" #dashboardsSection>
   <app-water-tracker></app-water-tracker>
   <app-food-diary></app-food-diary>
   <app-vitamin-balance></app-vitamin-balance>
