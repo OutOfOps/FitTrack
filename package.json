@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "npm --prefix fittrack-ua start",
-    "build": "npm --prefix fittrack-ua run build",
+    "build": "node scripts/run-build.js",
     "test": "npm --prefix fittrack-ua test",
     "watch": "npm --prefix fittrack-ua run watch"
   }
