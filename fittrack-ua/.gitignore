@@ -19,8 +19,6 @@ pnpm-debug.log*
 
 # Node dependencies
 /node_modules
-package-lock.json
-npm-shrinkwrap.json
 
 # Environment files (если содержат ключи)
 src/environments/environment.local.ts
