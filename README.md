@@ -85,7 +85,10 @@ cd fittrack
 
 ### 2️⃣ Установить зависимости и запустить PWA
 ```bash
-npm install
+# Установить зависимости Angular-приложения
+npm --prefix fittrack-ua install
+
+# Запустить локальный дев-сервер (доступен на http://localhost:4200)
 npm run start
 ```
 
