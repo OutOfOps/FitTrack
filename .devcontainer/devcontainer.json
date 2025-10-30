@@ -1,0 +1,28 @@
+{
+  "name": "Angular Dev Environment",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20", 
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "postCreateCommand": "npm install",
+  "forwardPorts": [4200],
+  "portsAttributes": {
+    "4200": {
+      "label": "Angular App",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "angular.ng-template",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "idleTimeoutMinutes": 15,
+  "shutdownAction": "stopContainer"
+}
