@@ -3,15 +3,53 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pwa": "projects/pwa",
-    "data-core": "projects/data-core",
-    "crypto": "projects/crypto",
-    "sync-engine": "projects/sync-engine",
-    "cloud-connectors": "projects/cloud-connectors",
-    "ui": "projects/ui"
+    "pwa": {
+      "projectType": "application",
+      "root": "projects/pwa",
+      "sourceRoot": "projects/pwa/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/pwa",
+            "index": "projects/pwa/src/index.html",
+            "main": "projects/pwa/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/pwa/tsconfig.app.json",
+            "assets": [
+              "projects/pwa/src/favicon.ico",
+              "projects/pwa/src/assets"
+            ],
+            "styles": ["projects/pwa/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "pwa:build",
+            "port": 4200,
+            "host": "0.0.0.0"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "pwa:build:production"
+            }
+          }
+        }
+      }
+    }
   },
   "cli": {
-    "analytics": false,
-    "defaultCollection": "@angular/angular"
-  }
+    "analytics": false
+  },
+  "defaultProject": "pwa"
 }
