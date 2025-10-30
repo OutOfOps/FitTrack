@@ -3,7 +3,11 @@
     <mat-card-title>Водний трекер</mat-card-title>
     <mat-card-subtitle>
       <mat-chip-set>
-        <mat-chip color="primary" [selected]="isOnline()" [disabled]="true">
+        <mat-chip
+          color="primary"
+          [ngClass]="{ 'mat-mdc-chip-selected': isOnline() }"
+          [disabled]="true"
+        >
           <mat-icon class="status-icon" aria-hidden="true">
             {{ isOnline() ? 'wifi' : 'wifi_off' }}
           </mat-icon>

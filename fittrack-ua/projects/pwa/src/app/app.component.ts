@@ -12,4 +12,5 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 export class AppComponent {
   readonly title = 'FitTrack UA';
   readonly description = 'Персональний прогрес-фітнес трекер з підтримкою офлайн синхронізації.';
+  readonly currentYear = new Date().getFullYear();
 }

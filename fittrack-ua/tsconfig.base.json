@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "module": "es2022",
-    "moduleResolution": "bundler",
+    "moduleResolution": "nodenext",
     "moduleDetection": "force",
     "outDir": "./dist/out-tsc",
     "target": "es2022",

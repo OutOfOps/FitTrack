@@ -6,7 +6,7 @@ import { FitButtonComponent, UiToolkitModule } from './ui-toolkit.module';
   selector: 'test-host',
   standalone: true,
   imports: [UiToolkitModule],
-  template: `<fit-button>Test</fit-button>`
+  template: `<fit-button type="submit" [disabled]="true">Test</fit-button>`
 })
 class HostComponent {}
 
@@ -22,6 +22,15 @@ describe('UiToolkitModule', () => {
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('fit-button button') as HTMLButtonElement;
     expect(button.textContent?.trim()).toBe('Test');
+  });
+
+  it('should forward state inputs to the inner button element', () => {
+    const fixture = TestBed.createComponent(HostComponent);
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('fit-button button') as HTMLButtonElement;
+    expect(button.getAttribute('type')).toBe('submit');
+    expect(button.disabled).toBeTrue();
+    expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('should expose FitButtonComponent as a standalone component', () => {

@@ -3,7 +3,11 @@
     <mat-card-title>Баланс вітамінів</mat-card-title>
     <mat-card-subtitle>
       <mat-chip-set>
-        <mat-chip color="primary" [selected]="isOnline()" [disabled]="true">
+        <mat-chip
+          color="primary"
+          [ngClass]="{ 'mat-mdc-chip-selected': isOnline() }"
+          [disabled]="true"
+        >
           <mat-icon aria-hidden="true">{{ isOnline() ? 'health_and_safety' : 'cloud_off' }}</mat-icon>
           {{ isOnline() ? 'Синхронізація' : 'Офлайн режим' }}
         </mat-chip>
