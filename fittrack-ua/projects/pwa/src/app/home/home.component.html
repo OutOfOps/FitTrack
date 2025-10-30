@@ -1,0 +1,43 @@
+<section class="hero">
+  <h2>Ласкаво просимо до FitTrack UA</h2>
+  <p>
+    Відстежуйте свої тренування, харчування та відновлення у сучасному прогресивному веб-застосунку,
+    що працює навіть без інтернету.
+  </p>
+</section>
+<section class="highlights">
+  <h3>Можливості</h3>
+  <ul>
+    <li *ngFor="let item of highlights">{{ item }}</li>
+  </ul>
+</section>
+<section class="cta">
+  <button type="button">Розпочати</button>
+</section>
+<section class="notifications" *ngIf="isPushSupported; else pushUnavailable">
+  <h3>Push сповіщення</h3>
+  <p>
+    Отримуйте нагадування про тренування та оновлення прогресу навіть тоді, коли застосунок не відкритий.
+  </p>
+  <button type="button" (click)="enableNotifications()" [disabled]="isProcessing()">
+    {{ isProcessing() ? 'Активація…' : 'Увімкнути сповіщення' }}
+  </button>
+  <div
+    class="status-banner"
+    *ngIf="bannerMessage() as message"
+    [class.status-banner--success]="bannerType() === 'success'"
+    [class.status-banner--error]="bannerType() === 'error'"
+    role="status"
+    aria-live="polite"
+  >
+    {{ message }}
+  </div>
+</section>
+<ng-template #pushUnavailable>
+  <section class="notifications notifications--disabled">
+    <h3>Push сповіщення</h3>
+    <p>
+      Push сповіщення недоступні у режимі розробки або у цьому браузері. Опублікуйте застосунок, щоб активувати функцію.
+    </p>
+  </section>
+</ng-template>

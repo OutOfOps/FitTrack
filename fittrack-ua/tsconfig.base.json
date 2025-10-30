@@ -1,0 +1,51 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "es2022",
+    "moduleResolution": "node",
+    "outDir": "./dist/out-tsc",
+    "target": "es2022",
+    "useDefineForClassFields": false,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "importHelpers": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "paths": {
+      "@fittrack/data-core": [
+        "projects/data-core/src/index.ts"
+      ],
+      "@fittrack/crypto": [
+        "projects/crypto/src/index.ts"
+      ],
+      "@fittrack/sync-engine": [
+        "projects/sync-engine/src/index.ts"
+      ],
+      "@fittrack/cloud-connectors": [
+        "projects/cloud-connectors/src/index.ts"
+      ],
+      "@fittrack/ui": [
+        "projects/ui/src/index.ts"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

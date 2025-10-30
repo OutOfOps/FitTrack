@@ -1,0 +1,48 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc"
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/pwa/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/pwa/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/pwa/tsconfig.editor.json"
+    },
+    {
+      "path": "./projects/data-core/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/data-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/crypto/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/crypto/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/sync-engine/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/sync-engine/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/cloud-connectors/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/cloud-connectors/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ui/tsconfig.spec.json"
+    }
+  ]
+}

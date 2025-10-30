@@ -1,0 +1,35 @@
+{
+  "$schema": "../../node_modules/@angular/cli/lib/config/project-schema.json",
+  "projectType": "library",
+  "root": "projects/crypto",
+  "sourceRoot": "projects/crypto/src",
+  "prefix": "fittrack",
+  "architect": {
+    "build": {
+      "builder": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "projects/crypto/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "projects/crypto/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "projects/crypto/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "builder": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "projects/crypto/tsconfig.spec.json",
+        "karmaConfig": "projects/crypto/karma.conf.js",
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ]
+      }
+    }
+  }
+}

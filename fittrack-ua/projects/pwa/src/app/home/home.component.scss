@@ -1,0 +1,138 @@
+:host {
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.hero {
+  text-align: center;
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    color: #0d47a1;
+  }
+
+  p {
+    margin: 0 auto;
+    max-width: 44rem;
+    color: #334155;
+  }
+}
+
+.highlights {
+  margin-top: 2.5rem;
+
+  h3 {
+    margin-bottom: 1rem;
+    color: #1e3a8a;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  li {
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    background: rgba(25, 118, 210, 0.08);
+    color: #1f2937;
+    box-shadow: 0 10px 25px -18px rgba(15, 23, 42, 0.65);
+  }
+}
+
+.cta {
+  margin-top: 2.5rem;
+  text-align: center;
+
+  button {
+    padding: 0.75rem 2.5rem;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: filter 150ms ease-in-out;
+
+    &:hover {
+      filter: brightness(1.05);
+    }
+  }
+}
+
+.notifications {
+  margin-top: 3rem;
+  padding: 2rem;
+  border: 1px solid rgba(13, 71, 161, 0.15);
+  border-radius: 1.5rem;
+  background: rgba(13, 71, 161, 0.05);
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+
+  button {
+    padding: 0.75rem 1.75rem;
+    border-radius: 999px;
+    border: none;
+    background-color: #0d47a1;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: progress;
+    }
+
+    &:not(:disabled):hover {
+      background-color: #1565c0;
+      transform: translateY(-1px);
+    }
+  }
+
+  .status-banner {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    background: rgba(25, 118, 210, 0.12);
+    color: #0d47a1;
+
+    &--success {
+      background: rgba(56, 142, 60, 0.12);
+      color: #2e7d32;
+    }
+
+    &--error {
+      background: rgba(229, 57, 53, 0.14);
+      color: #c62828;
+    }
+  }
+
+  &--disabled {
+    background: rgba(148, 163, 184, 0.12);
+    border-color: rgba(100, 116, 139, 0.2);
+
+    p {
+      margin-bottom: 0;
+      color: #475569;
+    }
+  }
+}
