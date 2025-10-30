@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
+import type { EChartsOption } from 'echarts';
 import { FitButtonComponent } from '@fittrack/ui';
 import { AppStatusService } from '../core/services/app-status.service';
 
@@ -25,24 +26,6 @@ interface VitaminStatus {
   range: VitaminRange;
   value: number;
   status: 'optimal' | 'deficit' | 'excess';
-}
-
-interface VitaminChartOptions {
-  tooltip: { trigger: string };
-  radar: {
-    indicator: Array<{ name: string; max: number }>;
-    axisName: { color: string; fontWeight: number };
-    splitArea: { areaStyle: { color: string[] } };
-  };
-  series: Array<{
-    type: 'radar';
-    data: Array<{
-      value: number[];
-      name: string;
-      areaStyle: { color: string };
-      lineStyle: { color: string };
-    }>;
-  }>;
 }
 
 @Component({
@@ -126,7 +109,7 @@ export class VitaminBalanceComponent {
     })
   );
   readonly issues = computed(() => this.vitaminStatuses().filter((item) => item.status !== 'optimal'));
-  readonly chartOptions = computed<VitaminChartOptions>(() => {
+  readonly chartOptions = computed<EChartsOption>(() => {
     const indicator = this.vitaminRanges.map((range) => ({
       name: `${range.label} (${range.unit})`,
       max: range.max * 1.2
@@ -135,7 +118,7 @@ export class VitaminBalanceComponent {
     const values = this.vitaminStatuses().map((status) => status.value);
 
     return {
-      tooltip: { trigger: 'item' },
+      tooltip: { trigger: 'item' as const },
       radar: {
         indicator,
         axisName: { color: '#0d47a1', fontWeight: 600 },
@@ -158,7 +141,7 @@ export class VitaminBalanceComponent {
           ]
         }
       ]
-    } satisfies VitaminChartOptions;
+    } satisfies EChartsOption;
   });
 
   applyJson(): void {
