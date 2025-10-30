@@ -13,6 +13,5 @@
   "cli": {
     "analytics": false,
     "defaultCollection": "@angular/angular"
-  },
-  "defaultProject": "pwa"
+  }
 }
