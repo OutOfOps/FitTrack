@@ -46,7 +46,7 @@
               <input
                 type="checkbox"
                 [checked]="isWeekdaySelected(option.value)"
-                (change)="toggleWeekday(option.value, ($event.target as HTMLInputElement).checked)"
+                (change)="toggleWeekday(option.value, $any($event.target).checked)"
               />
               <span>{{ option.label }}</span>
             </label>
@@ -76,7 +76,7 @@
               <input
                 type="checkbox"
                 [checked]="schedule.enabled"
-                (change)="toggle(schedule, ($event.target as HTMLInputElement).checked)"
+                (change)="toggle(schedule, $any($event.target).checked)"
               />
               <span class="title">{{ schedule.label }}</span>
             </label>
