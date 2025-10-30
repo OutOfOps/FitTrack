@@ -3,7 +3,11 @@
     <mat-card-title>Харчовий щоденник</mat-card-title>
     <mat-card-subtitle>
       <mat-chip-set>
-        <mat-chip color="primary" [selected]="isOnline()" [disabled]="true">
+        <mat-chip
+          color="primary"
+          [ngClass]="{ 'mat-mdc-chip-selected': isOnline() }"
+          [disabled]="true"
+        >
           <mat-icon aria-hidden="true">{{ isOnline() ? 'sync' : 'sync_disabled' }}</mat-icon>
           {{ isOnline() ? 'Синхронізація активна' : 'Офлайн режим' }}
         </mat-chip>

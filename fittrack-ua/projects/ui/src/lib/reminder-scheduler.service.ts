@@ -163,11 +163,20 @@ export class ReminderSchedulerService {
 
     try {
       const registration = await serviceWorker.ready;
-      if ('sync' in registration) {
-        await registration.sync.register('fittrack-reminders');
+      if (!this.hasBackgroundSync(registration)) {
+        return;
       }
+
+      await registration.sync.register('fittrack-reminders');
     } catch (error) {
       console.warn('Не вдалося зареєструвати синхронізацію нагадувань', error);
     }
+  }
+
+  private hasBackgroundSync(
+    registration: ServiceWorkerRegistration
+  ): registration is ServiceWorkerRegistration & { sync: SyncManager } {
+    const candidate = (registration as ServiceWorkerRegistration & { sync?: SyncManager }).sync;
+    return typeof candidate?.register === 'function';
   }
 }
