@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+  computed,
+  signal
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +34,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
+  @ViewChild('dashboardsSection') private dashboardsSection?: ElementRef<HTMLElement>;
   private readonly statusMessage = signal<string | null>(null);
   private readonly statusType = signal<'idle' | 'success' | 'error'>('idle');
   readonly isProcessing = signal(false);
@@ -40,6 +48,16 @@ export class HomeComponent {
   readonly bannerMessage = computed(() => this.statusMessage());
 
   constructor(private readonly pushNotifications: PushNotificationService) {}
+
+  scrollToDashboards(): void {
+    const target = this.dashboardsSection?.nativeElement;
+
+    if (!target) {
+      return;
+    }
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   async enableNotifications(): Promise<void> {
     if (this.isProcessing()) {
