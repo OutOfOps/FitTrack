@@ -1,6 +1,11 @@
 import { Injectable, computed, signal } from '@angular/core';
 import Dexie, { Table } from 'dexie';
 
+interface SyncManager {
+  register(tag: string): Promise<void>;
+  getTags?(): Promise<string[]>;
+}
+
 export interface ReminderSchedule {
   id: string;
   label: string;
