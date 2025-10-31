@@ -1,7 +1,8 @@
 {
   "name": "FitTrack UA",
   "short_name": "FitTrack",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1976d2",
