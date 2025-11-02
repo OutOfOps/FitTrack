@@ -106,3 +106,37 @@
     }
   }
 }
+
+@media (min-width: 768px) {
+  :host {
+    gap: 2rem;
+  }
+
+  .surface {
+    .mat-mdc-card-header,
+    .mat-mdc-card-content {
+      padding: 2rem;
+    }
+  }
+
+  .actions-list {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .actions-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 1.25rem 1.5rem;
+  }
+
+  .actions-list li {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  .actions-list li a {
+    justify-self: end;
+  }
+}
