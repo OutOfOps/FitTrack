@@ -1,9 +1,35 @@
 .vitamin-balance {
   display: block;
+  border-radius: 1.6rem;
+  padding: 1.75rem 1.5rem 2rem;
+  background: linear-gradient(180deg, rgba(129, 140, 248, 0.22) 0%, rgba(224, 231, 255, 0.92) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  box-shadow: 0 28px 50px -28px rgba(79, 70, 229, 0.35);
+  backdrop-filter: blur(14px);
+
+  .mat-mdc-card-header,
+  .mat-mdc-card-content {
+    padding: 0;
+  }
+
+  .mat-mdc-card-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .mat-mdc-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
 
   .mat-mdc-card-subtitle {
     display: flex;
     flex-direction: column;
+    gap: 0.65rem;
+    color: rgba(15, 23, 42, 0.7);
+  }
+
+  mat-chip-set {
     gap: 0.5rem;
   }
 }
@@ -12,24 +38,31 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(15, 23, 42, 0.6);
 
   &--empty {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(15, 23, 42, 0.45);
   }
 }
 
 .chart {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 
   &__canvas {
     width: 100%;
     height: 260px;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 1.25rem;
+    box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.12);
   }
 }
 
 .form {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.12);
 
   &__grid {
     display: grid;
@@ -42,6 +75,11 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  fit-button {
+    gap: 0.5rem;
+    font-weight: 600;
+  }
 }
 
 .validator {
@@ -49,6 +87,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.12);
 
   &__input {
     width: 100%;
@@ -62,13 +104,15 @@
   &__errors {
     margin: 0;
     padding-left: 1.25rem;
-    color: #c62828;
+    color: #b91c1c;
   }
 }
 
 .status {
   h3 {
     margin-top: 0;
+    font-size: 1.05rem;
+    color: #1e293b;
   }
 
   ul {
@@ -77,25 +121,28 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.9rem;
   }
 
   li {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    background: rgba(13, 71, 161, 0.08);
+    padding: 0.9rem 1rem;
+    border-radius: 1rem;
+    background: rgba(129, 140, 248, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.15);
   }
 
   .status__label {
     flex: 1;
     font-weight: 600;
+    color: #0f172a;
   }
 
   .status__value {
     font-weight: 600;
+    color: #312e81;
   }
 
   .status__badge {
@@ -103,21 +150,21 @@
     border-radius: 999px;
     font-size: 0.75rem;
     font-weight: 600;
-    background: rgba(46, 125, 50, 0.18);
-    color: #2e7d32;
+    background: rgba(34, 197, 94, 0.18);
+    color: #15803d;
 
     &--warn {
-      background: rgba(198, 40, 40, 0.2);
-      color: #c62828;
+      background: rgba(248, 113, 113, 0.18);
+      color: #b91c1c;
     }
 
     &--ok {
-      background: rgba(76, 175, 80, 0.22);
-      color: #1b5e20;
+      background: rgba(59, 130, 246, 0.18);
+      color: #1d4ed8;
     }
   }
 
   .status--warn {
-    background: rgba(255, 112, 67, 0.16);
+    background: rgba(248, 113, 113, 0.16);
   }
 }

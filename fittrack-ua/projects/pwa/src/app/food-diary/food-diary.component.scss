@@ -1,9 +1,35 @@
 .food-diary {
   display: block;
+  border-radius: 1.6rem;
+  padding: 1.75rem 1.5rem 2rem;
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.22) 0%, rgba(255, 247, 237, 0.92) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  box-shadow: 0 28px 50px -28px rgba(249, 115, 22, 0.4);
+  backdrop-filter: blur(14px);
+
+  .mat-mdc-card-header,
+  .mat-mdc-card-content {
+    padding: 0;
+  }
+
+  .mat-mdc-card-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .mat-mdc-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
 
   .mat-mdc-card-subtitle {
     display: flex;
     flex-direction: column;
+    gap: 0.65rem;
+    color: rgba(15, 23, 42, 0.7);
+  }
+
+  mat-chip-set {
     gap: 0.5rem;
   }
 }
@@ -12,10 +38,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(15, 23, 42, 0.6);
 
   &--empty {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(15, 23, 42, 0.45);
   }
 }
 
@@ -24,21 +50,31 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.18);
 
   &__date {
     font-weight: 600;
+    color: #0f172a;
   }
 }
 
 .calorie-progress {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   border-radius: 999px;
   height: 0.75rem;
+  background: rgba(255, 243, 219, 0.9);
 }
 
 .entry-form {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.15);
 
   form {
     display: flex;
@@ -56,23 +92,30 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    background: rgba(76, 175, 80, 0.08);
+    background: rgba(59, 130, 246, 0.1);
     border-radius: 12px;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
 
     h4 {
       margin: 0;
       font-size: 0.95rem;
       font-weight: 600;
-      color: #2e7d32;
+      color: #1e3a8a;
     }
+  }
+
+  fit-button {
+    align-self: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
   }
 }
 
 .import {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-bottom: 1.5rem;
 
   &__label {
@@ -89,20 +132,26 @@
   }
 
   &__success {
-    color: #2e7d32;
+    color: #15803d;
+    font-weight: 600;
   }
 
   &__errors {
-    color: #c62828;
+    color: #b91c1c;
+    font-weight: 500;
   }
 }
 
 .entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
   .loading {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(15, 23, 42, 0.6);
   }
 
   ul {
@@ -111,13 +160,17 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.9rem;
   }
 
   .entry {
-    padding: 0.75rem 1rem;
-    border-radius: 1rem;
-    background: rgba(255, 167, 38, 0.12);
+    padding: 0.9rem 1rem;
+    border-radius: 1.1rem;
+    background: rgba(253, 186, 116, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .entry__headline {
@@ -128,32 +181,32 @@
   }
 
   .entry__title {
-    font-weight: 600;
+    font-weight: 700;
+    color: #0f172a;
   }
 
   .entry__calories {
     font-weight: 700;
+    color: #92400e;
   }
 
   .entry__meta {
     font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.56);
+    color: rgba(15, 23, 42, 0.6);
   }
 
   .entry__vitamins {
-    margin-top: 0.5rem;
-
     .mat-mdc-chip-set {
       gap: 0.35rem;
     }
   }
 
   .empty {
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(15, 23, 42, 0.54);
   }
 
   .error {
-    color: #d32f2f;
+    color: #b91c1c;
     font-weight: 600;
   }
 }

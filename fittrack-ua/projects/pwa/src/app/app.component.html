@@ -1,27 +1,48 @@
-<header class="app-header">
-  <h1>{{ title }}</h1>
-  <p>{{ description }}</p>
-  <nav>
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      #homeActive="routerLinkActive"
-      [routerLinkActiveOptions]="{ exact: true }"
-      [attr.aria-current]="homeActive.isActive ? 'page' : null"
-      >Головна</a
-    >
-    <a
-      routerLink="/settings/reminders"
-      routerLinkActive="active"
-      #remindersActive="routerLinkActive"
-      [attr.aria-current]="remindersActive.isActive ? 'page' : null"
-      >Нагадування</a
-    >
-  </nav>
-</header>
-<main class="app-content">
-  <router-outlet></router-outlet>
-</main>
-<footer class="app-footer">
-  <p>&copy; {{ title }} {{ currentYear }}</p>
-</footer>
+<div class="app-background">
+  <div class="app-shell" role="application">
+    <header class="app-topbar" role="banner">
+      <div class="app-topbar__identity">
+        <span class="app-topbar__badge" aria-hidden="true">FT</span>
+        <div class="app-topbar__copy">
+          <h1>{{ title }}</h1>
+          <p>{{ description }}</p>
+        </div>
+      </div>
+      <button class="app-topbar__action" type="button" aria-label="Відкрити налаштування">
+        <mat-icon aria-hidden="true">tune</mat-icon>
+      </button>
+    </header>
+
+    <div class="app-surface" role="presentation">
+      <main class="app-content">
+        <router-outlet></router-outlet>
+      </main>
+
+      <nav class="app-tabbar" aria-label="Основна навігація">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          #homeActive="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [attr.aria-current]="homeActive.isActive ? 'page' : null"
+        >
+          <mat-icon aria-hidden="true">home</mat-icon>
+          <span>Головна</span>
+        </a>
+        <a
+          routerLink="/settings/reminders"
+          routerLinkActive="active"
+          #remindersActive="routerLinkActive"
+          [attr.aria-current]="remindersActive.isActive ? 'page' : null"
+        >
+          <mat-icon aria-hidden="true">notifications_active</mat-icon>
+          <span>Нагадування</span>
+        </a>
+      </nav>
+
+      <footer class="app-footer">
+        <span>&copy; {{ title }} {{ currentYear }}</span>
+      </footer>
+    </div>
+  </div>
+</div>

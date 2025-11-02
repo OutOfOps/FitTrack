@@ -1,18 +1,46 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 :root {
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-  color: #1f2933;
-  background-color: #f8fafc;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  color: #0f172a;
+  background-color: #0b1120;
+  --app-shell-max-width: 420px;
+  --app-radius-lg: 28px;
+  --app-radius-md: 20px;
+  --app-shadow-soft: 0 28px 60px -28px rgba(15, 23, 42, 0.55);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(37, 99, 235, 0.45), transparent 55%),
+    radial-gradient(circle at 18% 82%, rgba(14, 165, 233, 0.35), transparent 60%),
+    radial-gradient(circle at 82% 10%, rgba(192, 132, 252, 0.35), transparent 62%),
+    #0b1120;
+  color: inherit;
+  min-height: 100vh;
+  padding: 0;
 }
 
 body,
-html {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
 }
 
 * {
   box-sizing: border-box;
+}
+
+a {
+  color: inherit;
 }
