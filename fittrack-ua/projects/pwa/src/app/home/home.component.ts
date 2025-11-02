@@ -38,10 +38,28 @@ export class HomeComponent {
   private readonly statusMessage = signal<string | null>(null);
   private readonly statusType = signal<'idle' | 'success' | 'error'>('idle');
   readonly isProcessing = signal(false);
+  readonly heroFocus = [
+    { icon: 'water_drop', label: 'Гідратація' },
+    { icon: 'local_dining', label: 'Харчування' },
+    { icon: 'self_improvement', label: 'Відновлення' }
+  ];
+
   readonly highlights = [
-    'Прогрес тренувань у реальному часі',
-    'Офлайн режим з автоматичною синхронізацією',
-    'Інтеграція з хмарними сервісами та пристроями'
+    {
+      icon: 'insights',
+      title: 'Аналітика прогресу',
+      description: 'Відстежуйте тренування у режимі реального часу та плануйте наступні кроки.'
+    },
+    {
+      icon: 'cloud_sync',
+      title: 'Автономність',
+      description: 'Працюйте офлайн з автоматичною синхронізацією, щойно з’явиться інтернет.'
+    },
+    {
+      icon: 'hub',
+      title: 'Інтеграції',
+      description: 'Підключайте трекери, ваги та хмарні сервіси без складних налаштувань.'
+    }
   ];
   readonly isPushSupported = this.pushNotifications.isSupported();
   readonly bannerType = computed(() => this.statusType());
