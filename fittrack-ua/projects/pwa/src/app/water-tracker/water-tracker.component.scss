@@ -153,3 +153,64 @@
     font-weight: 600;
   }
 }
+
+@media (min-width: 768px) {
+  .water-tracker {
+    padding: 2.25rem 2rem 2.5rem;
+  }
+
+  .entry-form {
+    padding: 1.5rem;
+  }
+
+  .entry-list {
+    margin-top: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .water-tracker {
+    padding: 2.5rem 2.35rem 2.75rem;
+  }
+
+  .water-tracker .mat-mdc-card-content {
+    display: grid;
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+    gap: 1.5rem 2.25rem;
+    align-items: start;
+  }
+
+  .day-selector,
+  .entry-form,
+  .water-tracker mat-divider {
+    grid-column: 1;
+  }
+
+  .water-tracker mat-divider {
+    display: none;
+  }
+
+  .entry-list {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    margin-top: 0;
+    position: sticky;
+    top: 0;
+  }
+
+  .entry-list ul {
+    max-height: min(520px, 65vh);
+    overflow-y: auto;
+    padding-right: 0.35rem;
+  }
+
+  .entry-list .entry {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .entry-list .entry__meta {
+    justify-content: flex-end;
+  }
+}
