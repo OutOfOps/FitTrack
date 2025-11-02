@@ -1,40 +1,20 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  ViewChild,
-  computed,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { PushNotificationService } from '../core/services/push-notification.service';
+import { Router } from '@angular/router';
 import { FitButtonComponent } from '@fittrack/ui';
-import { WaterTrackerComponent } from '../water-tracker/water-tracker.component';
-import { FoodDiaryComponent } from '../food-diary/food-diary.component';
-import { VitaminBalanceComponent } from '../vitamin-balance/vitamin-balance.component';
-import { RouterLink } from '@angular/router';
+import { PushNotificationService } from '../core/services/push-notification.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-about',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatIconModule,
-    FitButtonComponent,
-    WaterTrackerComponent,
-    FoodDiaryComponent,
-    VitaminBalanceComponent,
-    RouterLink
-  ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  imports: [CommonModule, MatCardModule, MatIconModule, FitButtonComponent],
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent {
-  @ViewChild('dashboardsSection') private dashboardsSection?: ElementRef<HTMLElement>;
+export class AboutComponent {
   private readonly statusMessage = signal<string | null>(null);
   private readonly statusType = signal<'idle' | 'success' | 'error'>('idle');
   readonly isProcessing = signal(false);
@@ -65,17 +45,10 @@ export class HomeComponent {
   readonly bannerType = computed(() => this.statusType());
   readonly bannerMessage = computed(() => this.statusMessage());
 
-  constructor(private readonly pushNotifications: PushNotificationService) {}
-
-  scrollToDashboards(): void {
-    const target = this.dashboardsSection?.nativeElement;
-
-    if (!target) {
-      return;
-    }
-
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  constructor(
+    private readonly pushNotifications: PushNotificationService,
+    private readonly router: Router
+  ) {}
 
   async enableNotifications(): Promise<void> {
     if (this.isProcessing()) {
@@ -96,5 +69,9 @@ export class HomeComponent {
     } finally {
       this.isProcessing.set(false);
     }
+  }
+
+  navigateToTracker(): void {
+    this.router.navigate(['/water']);
   }
 }

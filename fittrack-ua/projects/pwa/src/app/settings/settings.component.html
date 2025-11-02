@@ -1,0 +1,35 @@
+<section class="settings-intro">
+  <mat-card class="surface surface--intro">
+    <mat-card-header>
+      <mat-card-title>Налаштування</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Керуйте сповіщеннями та каталогом харчування, щоб адаптувати FitTrack UA під власний стиль життя.
+      </p>
+      <p>
+        Оберіть розділ нижче, щоб змінити параметри нагадувань або оновити список страв.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<section class="settings-actions">
+  <mat-card class="surface surface--actions">
+    <mat-card-content>
+      <ul class="actions-list">
+        <li *ngFor="let item of settingsItems">
+          <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+          <div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+          <a [routerLink]="item.link">
+            <span>Відкрити</span>
+            <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+          </a>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</section>

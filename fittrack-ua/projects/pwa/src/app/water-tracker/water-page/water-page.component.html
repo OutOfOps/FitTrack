@@ -1,0 +1,39 @@
+<section class="page-intro">
+  <mat-card class="surface surface--intro">
+    <mat-card-header>
+      <mat-card-title>Баланс гідратації</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Відстежуйте щоденне споживання води, формуйте корисні звички та підтримуйте стабільний рівень енергії
+        протягом дня.
+      </p>
+      <p>
+        Додайте свою норму, плануйте наповнення пляшки та отримуйте миттєвий зворотній зв’язок щодо прогресу.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<section class="page-widget">
+  <app-water-tracker></app-water-tracker>
+</section>
+
+<section class="page-tips">
+  <mat-card class="surface surface--tips">
+    <mat-card-header>
+      <mat-card-title>Поради для гідратації</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul class="tips-list">
+        <li *ngFor="let tip of hydrationTips">
+          <mat-icon aria-hidden="true">{{ tip.icon }}</mat-icon>
+          <div>
+            <h4>{{ tip.title }}</h4>
+            <p>{{ tip.description }}</p>
+          </div>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</section>

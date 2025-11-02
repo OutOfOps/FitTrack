@@ -13,9 +13,9 @@
           <span>{{ item.label }}</span>
         </li>
       </ul>
-      <fit-button class="hero__cta" type="button" (click)="scrollToDashboards()">
+      <fit-button class="hero__cta" type="button" (click)="navigateToTracker()">
         <mat-icon aria-hidden="true">bolt</mat-icon>
-        Розпочати
+        Розпочати відстеження
       </fit-button>
     </mat-card-content>
   </mat-card>
@@ -81,43 +81,3 @@
     </mat-card>
   </section>
 </ng-template>
-
-<section class="reminders">
-  <mat-card class="surface surface--action">
-    <mat-card-header>
-      <mat-card-title>Нагадування</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        Плануйте персональні нагадування та отримуйте сповіщення у зручний для вас час.
-      </p>
-      <a routerLink="/settings/reminders" class="reminders__link">
-        <mat-icon aria-hidden="true">schedule</mat-icon>
-        Налаштувати нагадування
-      </a>
-    </mat-card-content>
-  </mat-card>
-</section>
-
-<section class="catalog">
-  <mat-card class="surface surface--action surface--catalog">
-    <mat-card-header>
-      <mat-card-title>Каталог харчування</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        Керуйте власним переліком українських страв, продуктів та овочів з калорійністю і вмістом вітамінів.
-      </p>
-      <a routerLink="/settings/food-catalog" class="catalog__link">
-        <mat-icon aria-hidden="true">restaurant</mat-icon>
-        Редагувати каталог
-      </a>
-    </mat-card-content>
-  </mat-card>
-</section>
-
-<section class="dashboards" #dashboardsSection>
-  <app-water-tracker></app-water-tracker>
-  <app-food-diary></app-food-diary>
-  <app-vitamin-balance></app-vitamin-balance>
-</section>

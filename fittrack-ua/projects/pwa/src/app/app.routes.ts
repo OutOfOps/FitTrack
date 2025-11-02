@@ -3,7 +3,26 @@ import { Routes } from '@angular/router';
 export const appRoutes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./home/home.component').then((m) => m.HomeComponent)
+    pathMatch: 'full',
+    redirectTo: 'about'
+  },
+  {
+    path: 'about',
+    loadComponent: () => import('./about/about.component').then((m) => m.AboutComponent)
+  },
+  {
+    path: 'water',
+    loadComponent: () =>
+      import('./water-tracker/water-page/water-page.component').then((m) => m.WaterPageComponent)
+  },
+  {
+    path: 'food',
+    loadComponent: () =>
+      import('./food-diary/food-page/food-page.component').then((m) => m.FoodPageComponent)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings.component').then((m) => m.SettingsComponent)
   },
   {
     path: 'settings/reminders',
@@ -21,7 +40,7 @@ export const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'about',
     pathMatch: 'full'
   }
 ];
