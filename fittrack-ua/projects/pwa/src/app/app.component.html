@@ -8,7 +8,12 @@
           <p>{{ description }}</p>
         </div>
       </div>
-      <button class="app-topbar__action" type="button" aria-label="Відкрити налаштування">
+      <button
+        class="app-topbar__action"
+        type="button"
+        aria-label="Перейти до налаштувань"
+        routerLink="/settings"
+      >
         <mat-icon aria-hidden="true">tune</mat-icon>
       </button>
     </header>
@@ -20,23 +25,40 @@
 
       <nav class="app-tabbar" aria-label="Основна навігація">
         <a
-          routerLink="/"
+          routerLink="/about"
           routerLinkActive="active"
-          #homeActive="routerLinkActive"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [attr.aria-current]="homeActive.isActive ? 'page' : null"
+          #aboutActive="routerLinkActive"
+          [attr.aria-current]="aboutActive.isActive ? 'page' : null"
         >
           <mat-icon aria-hidden="true">home</mat-icon>
-          <span>Головна</span>
+          <span>Про застосунок</span>
         </a>
         <a
-          routerLink="/settings/reminders"
+          routerLink="/water"
           routerLinkActive="active"
-          #remindersActive="routerLinkActive"
-          [attr.aria-current]="remindersActive.isActive ? 'page' : null"
+          #waterActive="routerLinkActive"
+          [attr.aria-current]="waterActive.isActive ? 'page' : null"
         >
-          <mat-icon aria-hidden="true">notifications_active</mat-icon>
-          <span>Нагадування</span>
+          <mat-icon aria-hidden="true">water_drop</mat-icon>
+          <span>Вода</span>
+        </a>
+        <a
+          routerLink="/food"
+          routerLinkActive="active"
+          #foodActive="routerLinkActive"
+          [attr.aria-current]="foodActive.isActive ? 'page' : null"
+        >
+          <mat-icon aria-hidden="true">restaurant_menu</mat-icon>
+          <span>Їжа</span>
+        </a>
+        <a
+          routerLink="/settings"
+          routerLinkActive="active"
+          #settingsActive="routerLinkActive"
+          [attr.aria-current]="settingsActive.isActive ? 'page' : null"
+        >
+          <mat-icon aria-hidden="true">tune</mat-icon>
+          <span>Налаштування</span>
         </a>
       </nav>
 
