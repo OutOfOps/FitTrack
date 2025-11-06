@@ -120,51 +120,69 @@
 }
 
 .app-tabbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  align-items: stretch;
+  justify-items: center;
   gap: 0.75rem;
   padding: 0.85rem clamp(1rem, 4vw, 1.75rem);
   border-top: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(148, 163, 184, 0.08);
+  background: rgba(15, 23, 42, 0.78);
+  color: rgba(226, 232, 240, 0.92);
   backdrop-filter: blur(16px);
 }
 
 .app-tabbar a {
-  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.45rem;
   padding: 0.65rem 0.5rem;
   border-radius: 18px;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
+  text-align: center;
   text-decoration: none;
-  color: #475569;
-  transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+  color: inherit;
+  transition: color 160ms ease, background-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
 
   mat-icon {
     font-size: 1.4rem;
   }
 
+  span {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: currentColor;
+    opacity: 0.92;
+  }
+
   &:focus-visible {
-    outline: 2px solid rgba(37, 99, 235, 0.45);
+    outline: 2px solid rgba(148, 163, 184, 0.55);
     outline-offset: 2px;
   }
 }
 
 .app-tabbar a.active {
-  color: #1d4ed8;
-  background: rgba(37, 99, 235, 0.16);
-  transform: translateY(-3px);
-  box-shadow: 0 18px 28px -22px rgba(37, 99, 235, 0.7);
+  color: #eff6ff;
+  background: rgba(59, 130, 246, 0.28);
+  box-shadow: 0 18px 28px -18px rgba(37, 99, 235, 0.65);
 }
 
 .app-tabbar a:not(.active):hover {
-  background: rgba(148, 163, 184, 0.18);
-  color: #1f2937;
+  background: rgba(148, 163, 184, 0.22);
+  color: #f8fafc;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app-tabbar a.active {
+    transform: translateY(-3px);
+  }
 }
 
 .app-footer {
@@ -255,6 +273,7 @@
   }
 
   .app-tabbar {
+    display: flex;
     grid-area: tabbar;
     flex-direction: column;
     align-items: stretch;
@@ -264,6 +283,7 @@
     border-radius: 28px;
     border: 1px solid rgba(148, 163, 184, 0.22);
     background: rgba(148, 163, 184, 0.12);
+    color: #1f2937;
     box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.16);
     position: sticky;
     top: clamp(1.25rem, 4vw, 2.5rem);
@@ -277,15 +297,21 @@
     gap: 1rem;
     padding: 0.85rem 1rem;
     font-size: 0.85rem;
+    color: inherit;
+
+    span {
+      flex: 1;
+      text-align: left;
+      text-transform: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      color: inherit;
+      opacity: 1;
+    }
   }
 
   .app-tabbar a mat-icon {
     font-size: 1.3rem;
-  }
-
-  .app-tabbar a span {
-    flex: 1;
-    text-align: left;
   }
 
   .app-footer {
